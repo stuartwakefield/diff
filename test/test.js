@@ -142,25 +142,41 @@ describe("diff", function() {
 	describe("#scoreSequences", function() {
 	
 		it("returns an empty array for an empty array of sequences", function() {
-			assert.deepEqual([], diff.scoreSequences([]));
+			assert.deepEqual([], diff.scoreSequences([], []));
 		});
 		
 		it("returns an array containing the sequence length for a single sequence", function() {
-			assert.deepEqual([2], diff.scoreSequences([[[0, 0], [1, 1]]]));
+			assert.deepEqual([2], diff.scoreSequences([2], [[]]));
 		});
 		
 		it("returns an array containing the sequence lengths for sequences that do not overlap", function() {
-			assert.deepEqual([2, 2], diff.scoreSequences([[[0, 0], [1, 1]], [[2, 2], [3, 3]]]));
+			assert.deepEqual([2, 2], diff.scoreSequences([2, 2], [[], []]));
 		});
 		
 		it("returns scores that reflect the sequence length minus the lengths of the excluded sequences", function() {
-			assert.deepEqual([0, 0], diff.scoreSequences([[[0, 0], [1, 1]], [[1, 1], [2, 2]]]));
+			assert.deepEqual([0, 0], diff.scoreSequences([2, 2], [[1], [0]]));
 		});
 		
 		it("returns scores that reflect the sequence length minus the lengths of the excluded sequences", function() {
-			assert.deepEqual([1, -1, 1], diff.scoreSequences([[[0, 0], [1, 1]], [[1, 1], [2, 2], [3, 3]], [[3, 3], [4, 4]]]));
+			assert.deepEqual([1, -1, 1], diff.scoreSequences([2, 3, 2], [[1], [0, 2], [1]]));
 		});
 	
+	});
+	
+	describe("#topSequences", function() {
+		
+		it("returns an empty array for an empty array of sequences", function() {
+			assert.deepEqual([], diff.topSequences([]));
+		});
+		
+		it("returns the sequence passed in if there is only one", function() {
+			assert.deepEqual([[[0, 0]]], diff.topSequences([[[0, 0]]]));
+		});
+		
+		it("returns the highest scoring sequences", function() {
+			assert.deepEqual([[[0, 0], [1, 1]]], diff.topSequences([[[0, 0]], [[0, 0], [1, 1]]]));
+		});
+		
 	});
 
 });
