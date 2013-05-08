@@ -17,11 +17,11 @@ describe("diff", function() {
 			assert.deepEqual([["a", -1]], diff.diffChars("a", ""));
 		});	
 		
-		it("returns a addition diff when text in b is missing in a", function() {
+		it("returns an addition diff when text in b is missing in a", function() {
 			assert.deepEqual([["a", 1]], diff.diffChars("", "a"));
 		});
 		
-		it("returns a no-change diff when inputs are equal multi-characters", function() {
+		it("returns a no-change diff when inputs are equal (multi-char)", function() {
 			assert.deepEqual([["a", 0], ["b", 0]], diff.diffChars("ab", "ab"));
 		});
 		
@@ -37,6 +37,42 @@ describe("diff", function() {
 			assert.deepEqual([["a", -1], ["b", 1]], diff.diffChars("a", "b"));
 		});
 
+	});
+	
+	describe("#diffWords", function() {
+	
+		it("returns an empty array for two blank strings", function() {
+			assert.deepEqual([], diff.diffWords("", ""));
+		});
+		
+		it("returns an no-change diff when inputs are equal", function() {
+			assert.deepEqual([["Hello", 0]], diff.diffWords("Hello", "Hello"));
+		});
+		
+		it("returns a deletion diff when text in a is missing in b", function() {
+			assert.deepEqual([["Hello", -1]], diff.diffWords("Hello", ""));
+		});
+		
+		it("returns an addition diff when text in b is missing in a", function() {
+			assert.deepEqual([["Hello", 1]], diff.diffWords("", "Hello"));
+		});
+		
+		it("returns a no-change diff when inputs are equal (multi-word)", function() {
+			assert.deepEqual([["Hello", 0], [" ", 0], ["World", 0]], diff.diffWords("Hello World", "Hello World"));
+		});
+		
+		it("returns a mixed diff when some text is changed", function() {
+			assert.deepEqual([["Hello", -1], [" ", -1], ["World", 0]], diff.diffWords("Hello World", "World"));
+		});
+		
+		it("returns a mixed diff when text is changed", function() {
+			assert.deepEqual([["Hello", -1], [" ", -1], ["World", 0], [" ", 1], ["Map", 1]], diff.diffWords("Hello World", "World Map"));
+		});
+		
+		it("returns a mixed diff with deletions first when text is changed", function() {
+			assert.deepEqual([["Hello", -1], ["World", 1]], diff.diffWords("Hello", "World"));
+		});
+	
 	});
 
 	describe("#splitChars", function() {
@@ -61,6 +97,22 @@ describe("diff", function() {
 			assert.deepEqual([" ", "\r", "\n", "\t"], diff.splitChars(" \r\n\t"));
 		});
 
+	});
+	
+	describe("#splitWords", function() {
+	
+		it("returns an empty array for a blank string", function() {
+			assert.deepEqual([], diff.splitWords(""));
+		});
+	
+		it("returns a word in an array for a one word string", function() {
+			assert.deepEqual(["Hello"], diff.splitWords("Hello"));
+		});
+		
+		it("preserves whitespace characters", function() {
+			assert.deepEqual(["Hello", " ", "World", "\r\n"], diff.splitWords("Hello World\r\n"));
+		});
+	
 	});
 	
 	describe("#mapArray", function() {
