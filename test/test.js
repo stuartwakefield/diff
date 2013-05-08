@@ -12,6 +12,30 @@ describe("diff", function() {
 		it("returns a no-change diff when inputs are equal", function() {
 			assert.deepEqual([["a", 0]], diff.diffChars("a", "a"));
 		});	
+		
+		it("returns a deletion diff when text in a is missing in b", function() {
+			assert.deepEqual([["a", -1]], diff.diffChars("a", ""));
+		});	
+		
+		it("returns a addition diff when text in b is missing in a", function() {
+			assert.deepEqual([["a", 1]], diff.diffChars("", "a"));
+		});
+		
+		it("returns a no-change diff when inputs are equal multi-characters", function() {
+			assert.deepEqual([["a", 0], ["b", 0]], diff.diffChars("ab", "ab"));
+		});
+		
+		it("returns a mixed diff when some text is changed", function() {
+			assert.deepEqual([["a", -1], ["b", 0]], diff.diffChars("ab", "b"));
+		});
+		
+		it("returns a mixed diff when text is changed", function() {
+			assert.deepEqual([["a", -1], ["b", 0], ["c", 1]], diff.diffChars("ab", "bc"));
+		});
+		
+		it("returns a mixed diff with deletions first when text is changed", function() {
+			assert.deepEqual([["a", -1], ["b", 1]], diff.diffChars("a", "b"));
+		});
 
 	});
 
@@ -63,6 +87,10 @@ describe("diff", function() {
 		
 		it("returns an empty array for two arrays with no matches", function() {
 			assert.deepEqual([], diff.pairArrays(["a"], ["b"]));
+		});
+		
+		it("returns an array for all pairs", function() {
+			assert.deepEqual([[1, 0], [0, 1]], diff.pairArrays(["a", "b"], ["b", "a"]));
 		});
 		
 	});
