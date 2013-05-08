@@ -1,4 +1,4 @@
-var diff = require("../lib/diff");
+var diff = require("../../lib/diff");
 
 var input = 
 	"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in " +
