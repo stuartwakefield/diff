@@ -152,6 +152,14 @@ describe("diff", function() {
 		it("returns an array containing the sequence lengths for sequences that do not overlap", function() {
 			assert.deepEqual([2, 2], diff.scoreSequences([[[0, 0], [1, 1]], [[2, 2], [3, 3]]]));
 		});
+		
+		it("returns scores that reflect the sequence length minus the lengths of the excluded sequences", function() {
+			assert.deepEqual([0, 0], diff.scoreSequences([[[0, 0], [1, 1]], [[1, 1], [2, 2]]]));
+		});
+		
+		it("returns scores that reflect the sequence length minus the lengths of the excluded sequences", function() {
+			assert.deepEqual([1, -1, 1], diff.scoreSequences([[[0, 0], [1, 1]], [[1, 1], [2, 2], [3, 3]], [[3, 3], [4, 4]]]));
+		});
 	
 	});
 
