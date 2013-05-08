@@ -138,5 +138,21 @@ describe("diff", function() {
 		});
 		
 	});
+	
+	describe("#scoreSequences", function() {
+	
+		it("returns an empty array for an empty array of sequences", function() {
+			assert.deepEqual([], diff.scoreSequences([]));
+		});
+		
+		it("returns an array containing the sequence length for a single sequence", function() {
+			assert.deepEqual([2], diff.scoreSequences([[[0, 0], [1, 1]]]));
+		});
+		
+		it("returns an array containing the sequence lengths for sequences that do not overlap", function() {
+			assert.deepEqual([2, 2], diff.scoreSequences([[[0, 0], [1, 1]], [[2, 2], [3, 3]]]));
+		});
+	
+	});
 
 });
