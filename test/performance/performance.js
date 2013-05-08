@@ -14,7 +14,7 @@ var e;
 
 while(!e || e - s < 10000) {
 	s = new Date().valueOf();
-	diff.diffChars(input.substr(0, count), input.substr(0, count))
+	diff.diffWords(input.substr(0, count), input.substr(0, count))
 	e = new Date().valueOf();
 	console.log("Count", count, "characters", "Time taken", e - s, "ms");
 	count += step;
@@ -26,3 +26,6 @@ while(!e || e - s < 10000) {
 // Performance would be increased with line splitting, a line limit, word 
 // diffing rather than character diffing. The scoring function is the most
 // expensive as a n * graph traversal. This could be optimised.
+
+// Even with diff words, the performance has increased but still reaches 10
+// seconds for two 200 character strings
