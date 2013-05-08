@@ -66,5 +66,25 @@ describe("diff", function() {
 		});
 		
 	});
+	
+	describe("#groupPairs", function() {
+		
+		it("returns an empty array for an empty array of pairs", function() {
+			assert.deepEqual([], diff.groupPairs([]));
+		})
+		
+		it("returns a single sequence of pairs for a single pair", function() {
+			assert.deepEqual([[[0, 0]]], diff.groupPairs([[0, 0]]));
+		});
+		
+		it("returns a single sequence of pairs for successive pairs", function() {
+			assert.deepEqual([[[0, 0], [1, 1]]], diff.groupPairs([[0, 0], [1, 1]]));
+		});
+		
+		it("returns sequences for each set of successive pairs", function() {
+			assert.deepEqual([[[0, 0], [1, 1]], [[2, 0], [3, 1]], [[4, 4]]], diff.groupPairs([[0, 0], [1, 1], [2, 0], [3, 1], [4, 4]]));
+		});
+		
+	});
 
 });
