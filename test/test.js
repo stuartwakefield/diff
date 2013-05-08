@@ -86,5 +86,57 @@ describe("diff", function() {
 		});
 		
 	});
+	
+	describe("#mapSequencesCollisions", function() {
+	
+		it("returns an empty array for an empty array of sequences", function() {
+			assert.deepEqual([], diff.mapSequenceCollisions([]));
+		});
+		
+		it("returns an array of empty arrays when there are no collisions", function() {
+			assert.deepEqual([[], []], diff.mapSequenceCollisions([[[0, 0]], [[1, 1]]]));
+		});
+		
+		it("returns an array containing arrays of indices when there are collisions", function() {
+			assert.deepEqual([[1], [0]], diff.mapSequenceCollisions([[[0, 0], [1, 1]], [[1, 1], [2, 2]]]));
+		});
+	
+	});
+	
+	describe("#doSequencesCollide", function() {
+		
+		it("returns false if sequences do no collide", function() {
+			assert.equal(false, diff.doSequencesCollide([[0, 0]], [[1, 1]]));
+		});
+		
+		it("returns true if sequences overlap for both a and b", function() {
+			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1], [2, 2]], [[1, 1], [2, 2], [3, 3]]));
+		});
+		
+		it("returns true if sequences overlap for a only", function() {
+			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1], [2, 2]], [[1, 3], [2, 4], [3, 5]]));
+		});
+		
+		it("returns true if sequences overlap for b only", function() {
+			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1], [2, 2]], [[3, 1], [4, 2], [5, 3]]));
+		});
+		
+		it("returns true if sequences cross overlap", function() {
+			assert.equal(true, diff.doSequencesCollide([[0, 3], [1, 4], [2, 5]], [[3, 0], [4, 1], [5, 2]]));
+		});
+		
+		it("returns true if sequences touch for both a and b", function() {
+			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1]], [[1, 1], [2, 2]]));
+		});
+		
+		it("returns true if sequences touch for a only", function() {
+			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1]], [[1, 2], [2, 3]]));
+		});
+		
+		it("returns true if sequences touch for b only", function() {
+			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1]], [[2, 1], [3, 2]]));
+		});
+		
+	});
 
 });
