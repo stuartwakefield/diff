@@ -30,13 +30,3 @@ while(count < l && (!e || e - s < 10000)) {
 }
 
 console.log("Performance:", q, "characters in", e - s, "ms"); 
-
-// Without subdivisions (such as diffing characters on lines) the scaling
-// of this function is n squared due to the time it takes to pair up characters
-
-// Performance would be increased with line splitting, a line limit, word 
-// diffing rather than character diffing. The scoring function is the most
-// expensive as a n * graph traversal. This could be optimised.
-
-// Even with diff words, the performance has increased but still reaches 10
-// seconds for two 200 character strings
