@@ -221,8 +221,8 @@ describe("diff", function() {
 			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1]], [[2, 1], [3, 2]]));
 		});
 		
-		it("returns true if sequences touch for b only", function() {
-			assert.equal(true, diff.doSequencesCollide([[1, 2]], [[2, 0]]));
+		it("returns true if sequences overlap bug", function() {
+			assert.equal(true, diff.doSequencesCollide([[1, 1]], [[2, 0]]));
 		});
 		
 	});
