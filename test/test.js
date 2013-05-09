@@ -201,8 +201,12 @@ describe("diff", function() {
 			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1], [2, 2]], [[3, 1], [4, 2], [5, 3]]));
 		});
 		
-		it("returns true if sequences cross overlap", function() {
-			assert.equal(true, diff.doSequencesCollide([[0, 3], [1, 4], [2, 5]], [[3, 0], [4, 1], [5, 2]]));
+		it("returns true if sequences cross overlap a over b", function() {
+			assert.equal(true, diff.doSequencesCollide([[0, 1]], [[1, 0]]));
+		});
+		
+		it("returns true if sequences cross overlap b over a", function() {
+			assert.equal(true, diff.doSequencesCollide([[1, 0]], [[0, 1]]));
 		});
 		
 		it("returns true if sequences touch for both a and b", function() {
@@ -217,28 +221,32 @@ describe("diff", function() {
 			assert.equal(true, diff.doSequencesCollide([[0, 0], [1, 1]], [[2, 1], [3, 2]]));
 		});
 		
+		it("returns true if sequences touch for b only", function() {
+			assert.equal(true, diff.doSequencesCollide([[1, 2]], [[2, 0]]));
+		});
+		
 	});
 	
-	describe("#scoreCollisions", function() {
+	describe("#scoreCollisionsGraph", function() {
 	
 		it("returns an empty array for an empty array of sequences", function() {
-			assert.deepEqual([], diff.scoreCollisions([], []));
+			assert.deepEqual([], diff.scoreCollisionsGraph([], []));
 		});
 		
 		it("returns an array containing the sequence length for a single sequence", function() {
-			assert.deepEqual([2], diff.scoreCollisions([2], [[]]));
+			assert.deepEqual([2], diff.scoreCollisionsGraph([2], [[]]));
 		});
 		
 		it("returns an array containing the sequence lengths for sequences that do not overlap", function() {
-			assert.deepEqual([2, 2], diff.scoreCollisions([2, 2], [[], []]));
+			assert.deepEqual([2, 2], diff.scoreCollisionsGraph([2, 2], [[], []]));
 		});
 		
 		it("returns scores that reflect the sequence length minus the lengths of the excluded sequences", function() {
-			assert.deepEqual([0, 0], diff.scoreCollisions([2, 2], [[1], [0]]));
+			assert.deepEqual([0, 0], diff.scoreCollisionsGraph([2, 2], [[1], [0]]));
 		});
 		
 		it("returns scores that reflect the sequence length minus the lengths of the excluded sequences", function() {
-			assert.deepEqual([1, -1, 1], diff.scoreCollisions([2, 3, 2], [[1], [0, 2], [1]]));
+			assert.deepEqual([1, -1, 1], diff.scoreCollisionsGraph([2, 3, 2], [[1], [0, 2], [1]]));
 		});
 	
 	});
