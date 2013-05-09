@@ -219,26 +219,26 @@ describe("diff", function() {
 		
 	});
 	
-	describe("#scoreSequences", function() {
+	describe("#scoreCollisions", function() {
 	
 		it("returns an empty array for an empty array of sequences", function() {
-			assert.deepEqual([], diff.scoreSequences([], []));
+			assert.deepEqual([], diff.scoreCollisions([], []));
 		});
 		
 		it("returns an array containing the sequence length for a single sequence", function() {
-			assert.deepEqual([2], diff.scoreSequences([2], [[]]));
+			assert.deepEqual([2], diff.scoreCollisions([2], [[]]));
 		});
 		
 		it("returns an array containing the sequence lengths for sequences that do not overlap", function() {
-			assert.deepEqual([2, 2], diff.scoreSequences([2, 2], [[], []]));
+			assert.deepEqual([2, 2], diff.scoreCollisions([2, 2], [[], []]));
 		});
 		
 		it("returns scores that reflect the sequence length minus the lengths of the excluded sequences", function() {
-			assert.deepEqual([0, 0], diff.scoreSequences([2, 2], [[1], [0]]));
+			assert.deepEqual([0, 0], diff.scoreCollisions([2, 2], [[1], [0]]));
 		});
 		
 		it("returns scores that reflect the sequence length minus the lengths of the excluded sequences", function() {
-			assert.deepEqual([1, -1, 1], diff.scoreSequences([2, 3, 2], [[1], [0, 2], [1]]));
+			assert.deepEqual([1, -1, 1], diff.scoreCollisions([2, 3, 2], [[1], [0, 2], [1]]));
 		});
 	
 	});
