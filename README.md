@@ -1,4 +1,3 @@
-diff
-====
+# Diff.js
 
-A diff algorithm
+A diff'ing library
