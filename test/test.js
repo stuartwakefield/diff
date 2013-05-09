@@ -258,5 +258,21 @@ describe("diff", function() {
 		});
 		
 	});
+	
+	describe("#topPairs", function() {
+	
+		it("returns an empty array for an empty array of pairs", function() {
+			assert.deepEqual([], diff.topPairs([]));
+		});
+		
+		it("returns both pairs if there are no collisions", function() {
+			assert.deepEqual([[0, 0], [1, 1]], diff.topPairs([[0, 0], [1, 1]]));
+		});
+		
+		it("returns the longest sequence of pairs if there are collisions", function() {
+			assert.deepEqual([[1, 0], [2, 1]], diff.topPairs([[0, 0], [1, 0], [2, 1]]));
+		});
+	
+	});
 
 });
